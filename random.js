@@ -1,32 +1,67 @@
- var randarray = new Array();
-        var l = 0;
-        var flag;
-        var numofpost = 5;
+var randomposts_number = 5;
+var randomposts_chars = 0;
+var randomposts_details = 'no';
+var randomposts_comments = 'Comments';
+var randomposts_commentsd = 'Comments Disabled';
+var randomposts_current = [];
+var total_randomposts = 0;
+var randompoststhumb = 0;
+var randomposts_current = new Array(randomposts_number);
 
-        function nooprandomposts(json) {
-            var total = parseInt(json.feed.openSearch$totalResults.$t, 10);
-            for (i = 0; i < numofpost;) {
-                flag = 0;
-                randarray.length = numofpost;
-                l = Math.floor(Math.random() * total);
-                for (j in randarray) {
-                    if (l == randarray[j]) {
-                        flag = 1;
-                    }
-                }
-                if (flag == 0 && l != 0) {
-                    randarray[i++] = l;
-                }
+function randomposts(json) {
+    total_randomposts = json.feed.openSearch$totalResults.$t
+}
+document.write('<script type=\"text/javascript\" src=\"/feeds/posts/default?alt=json-in-script&max-results=0&callback=randomposts\"><\/script>');
+
+function getvalue() {
+    for (var i = 0; i < randomposts_number; i++) {
+        var found = false;
+        var rndValue = get_random();
+        for (var j = 0; j < randomposts_current.length; j++) {
+            if (randomposts_current[j] == rndValue) {
+                found = true;
+                break
             }
-            document.write('<ul>');
-            for (n in randarray) {
-                var p = randarray[n];
-                var entry = json.feed.entry[p - 1];
-                for (k = 0; k < entry.link.length; k++) {
-                    if (entry.link[k].rel == 'alternate') {
-                        var item = "<li>" + "<a href=" + entry.link[k].href + ">" + entry.title.$t + "</a> </li>";
-                        document.write(item);
-                    }
-                }
-                document.write('</ul>');
+        };
+        if (found) {
+            i--
+        } else {
+            randomposts_current[i] = rndValue
+        }
+    }
+};
+
+function get_random() {
+    var ranNum = 1 + Math.round(Math.random() * (total_randomposts - 1));
+    return ranNum
+};
+
+function random_posts(json) {
+    for (var i = 0; i < randomposts_number; i++) {
+        var entry = json.feed.entry[i];
+        var randompoststitle = entry.title.$t;
+        if ('content' in entry) {
+            var randompostsnippet = entry.content.$t
+        } else {
+            if ('summary' in entry) {
+                var randompostsnippet = entry.summary.$t
+            } else {
+                var randompostsnippet = "";
             }
+        };
+         for (var j = 0; j < entry.link.length; j++) {
+           if (entry.link[j].rel == 'alternate') {
+                var randompostsurl = entry.link[j].href;
+                var randomposts_date = entry.published.$t;
+               }
+        };
+document.write('<li>');
+        document.write('<div><a href="' + randompostsurl + '" rel="nofollow">' + randompoststitle + '</a></div>');
+
+            document.write('<div style="clear:both"></div></li>')
+    }
+};
+getvalue();
+for (var i = 0; i < randomposts_number; i++) {
+    document.write('<script type=\"text/javascript\" src=\"/feeds/posts/default?alt=json-in-script&start-index=' + randomposts_current[i] + '&max-results=1&callback=random_posts\"><\/script>')
+};
