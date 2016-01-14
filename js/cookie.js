@@ -108,7 +108,7 @@
                         learnMore: "More info",
                         link: null,
                         container: null,
-                        theme: "light-floating",
+                        theme: "dark-floating",
                         domain: null,
                         path: "/",
                         expiryDays: 365,
