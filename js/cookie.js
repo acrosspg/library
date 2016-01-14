@@ -4,7 +4,7 @@
         var e = "cookieconsent_options",
             t = "update_cookieconsent_options",
             n = "cookieconsent_dismissed",
-            i = "//s3.amazonaws.com/cc.silktide.com/";
+            i = "//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/";
         if (!(document.cookie.indexOf(n) > -1)) {
             "function" != typeof String.prototype.trim && (String.prototype.trim = function() {
                 return this.replace(/^\s+|\s+$/g, "")
