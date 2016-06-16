@@ -1,7 +1,7 @@
 jQuery(document).ready(function () {
 
-	$('#membermenu-toggle').click(function () {
-      $('#membernav').toggleClass('open');
+	jQuery('#membermenu-toggle').click(function () {
+	jQuery('#membernav').toggleClass('open');
       e.preventDefault();
     });
     
