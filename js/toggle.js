@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$( document ).ready(function () {
 
 	$('#membermenu-toggle').click(function () {
       $('#membernav').toggleClass('open');
