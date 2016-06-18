@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(function () {
 
 	$('#membermenu-toggle').click(function () {
 	$('#membernav').toggleClass('open');
